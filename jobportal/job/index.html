@@ -63,7 +63,7 @@
                  <li><a href="contact.html">Contact Us</a></li>
                  <li>
                      <div class="flexbox-profile">
-                         <button class="btn btn-default">Your Profile</button>
+                         <button href="jobportal/job/profile.html" class="btn btn-default">Your Profile</button>
                      </div>
                  </li>
              </ul>
@@ -516,52 +516,134 @@
 
 
      <div id="chatbot-container" class="collapsed">
+
           <div id="chatbot-header">Chat with us</div>
+      
           <div id="chatbot-messages"></div>
+      
           <div id="chatbot-input">
+      
               <input type="text" id="user-input" placeholder="Type your message...">
+      
               <button id="send-btn">Send</button>
+      
           </div>
+      
       </div>
-  
+      
+      
       <script>
+      
           const chatbotContainer = document.getElementById('chatbot-container');
+      
           const chatbotHeader = document.getElementById('chatbot-header');
+      
           const chatbotMessages = document.getElementById('chatbot-messages');
+      
           const userInput = document.getElementById('user-input');
+      
           const sendBtn = document.getElementById('send-btn');
-  
+      
+      
           chatbotHeader.addEventListener('click', () => {
+      
               chatbotContainer.classList.toggle('collapsed');
+      
           });
-  
+      
+      
           sendBtn.addEventListener('click', sendMessage);
+      
           userInput.addEventListener('keypress', (e) => {
+      
               if (e.key === 'Enter') {
+      
                   sendMessage();
+      
               }
+      
           });
-  
+      
+      
           function sendMessage() {
+      
               const message = userInput.value.trim();
+      
               if (message) {
+      
                   addMessage('user', message);
+      
                   userInput.value = '';
-                  // Simulate bot response (replace with actual chatbot logic)
-                  setTimeout(() => {
-                      addMessage('bot', `You said: "${message}". This is a demo response.`);
-                  }, 1000);
+      
+                  getChatGPTResponse(message);
+      
               }
+      
           }
-  
+      
+      
           function addMessage(sender, text) {
+      
               const messageElement = document.createElement('div');
+      
               messageElement.textContent = `${sender === 'user' ? 'You' : 'Bot'}: ${text}`;
+      
               messageElement.style.marginBottom = '10px';
+      
               chatbotMessages.appendChild(messageElement);
+      
               chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      
           }
+      
+      
+          async function getChatGPTResponse(prompt) {
+      
+              try {
+      
+                  const response = await fetch('https://api.openai.com/v1/completions', {
+      
+                      method: 'POST',
+      
+                      headers: {
+      
+                          'Content-Type': 'application/json',
+      
+                          'Authorization': 'Bearer YOUR_OPENAI_API_KEY'
+      
+                      },
+      
+                      body: JSON.stringify({
+      
+                          model: 'text-davinci-003',
+      
+                          prompt: prompt,
+      
+                          max_tokens: 2048,
+      
+                          temperature: 0.5
+      
+                      })
+      
+                  });
+      
+      
+                  const data = await response.json();
+      
+                  const botResponse = data.choices[0].text;
+      
+                  addMessage('bot', botResponse);
+      
+              } catch (error) {
+      
+                  console.error(error);
+      
+                  addMessage('bot', 'Error: Unable to get response from ChatGPT!');
+      
+              }
+      
+          }
+      
       </script>
-      </div>
 </body>
 </html>
