@@ -874,7 +874,26 @@ https://templatemo.com/tm-516-known
     height: 50px;
     margin: 5px 0;
   }
+.flexbox-profile {
+    display: flex;
+    justify-content: center;
+    align-items: right;
+    padding: 10px;
+}
 
+.flexbox-profile button {
+    background-color: #29ca8e;
+    color: #fff;
+    margin-right: auto;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.flexbox-profile button:hover {
+    background-color: #3e8e41;
+}
   .newsletter-form input[type="submit"] {
     background: transparent;
     border: 1px solid #f9f9f9;
