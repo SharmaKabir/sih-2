@@ -3,102 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Profile</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap">
+    
 </head>
 <body>
-<!-- MENU -->
-<section class="navbar custom-navbar navbar-fixed-top" role="navigation">
-    <div class="container">
-
-        <div class="navbar-header">
-            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon icon-bar"></span>
-                <span class="icon icon-bar"></span>
-                <span class="icon icon-bar"></span>
-            </button>
-
-            <!-- lOGO TEXT HERE -->
-            <a href="#" class="navbar-brand">RJ Career</a>
+    <div class="dashboard">
+        <div class="sidebar">
+            <div class="profile-section">
+                <img src="user-photo.jpg" alt="Profile Picture" id="profile-pic" class="profile-pic">
+                <input type="file" id="profilePicInput" accept="image/*" onchange="updateProfilePhoto()" style="display:none;">
+                <h2 class="user-name">John Doe</h2>
+                <p class="user-designation">Developer</p>
+                <button class="edit-btn" onclick="openEditDialog()">Edit Profile</button>
+            </div>
+            <div class="menu">
+                <button class="menu-btn">Applied Jobs <span id="appliedJobs">0</span></button>
+                <button class="menu-btn">Pending Jobs <span id="pendingJobs">0</span></button>
+                <button class="menu-btn">Accepted Jobs <span id="acceptedJobs">0</span></button>
+                <button class="menu-btn" onclick="toggleGraph()">Show Job Stats</button>
+            </div>
         </div>
 
-        <!-- MENU LINKS -->
-        <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav navbar-nav-first">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="job-listing.html">Jobs</a></li>
-                <li><a href="about-us.html">About Us</a></li>
-                <li><a href="blog-posts.html">Blog</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="team.html">Team</a></li>
-                        <li><a href="testimonials.html">Testimonials</a></li>
-                        <li><a href="terms.html">Terms</a></li>
-                    </ul>
-                </li>
-                <li><a href="contact.html">Contact Us</a></li>
-                <li>
-                    <div  class="active" class="flexbox-profile">
-                        <button class="btn btn-default">Your Profile</button>
+        <div class="main-section">
+            <div class="graph-section" id="graph-section" style="display: none;">
+                <canvas id="jobChart" width="400" height="200"></canvas>
+            </div>
+
+            <div class="messages">
+                <h3>Messages</h3>
+                <div class="message-list" id="dm-section">
+                    <div class="message recruiter-message">
+                        <img src="images\user-profile-pic.jpg" alt="Recruiter" class="profile-pic-small">
+                        <div class="message-content">
+                            <p>Hello, we'd like to invite you for an interview.</p>
+                        </div>
                     </div>
-                </li>
-            </ul>
-        </div>
-
-    </div>
-</section>
-
-
-<!-- PROFILE SECTION -->
-<section class="profile-section">
-    <div class="container">
-        <form class="profile-form" action="" method="POST" enctype="multipart/form-data">
-            <!-- Flex container for layout -->
-            <div class="form-group">
-                <label for="fullName">Full Name:</label>
-                <input type="text" id="fullName" name="fullName" placeholder="Enter your name" required>
+                    <!-- Add your own messages dynamically with JavaScript -->
+                </div>
+                <div class="message-input-container">
+                    <input type="text" placeholder="Type a message" class="message-input" id="messageInput">
+                    <button class="send-btn" onclick="sendMessage()">Send</button>
+                </div>
             </div>
             
-            <div class="form-group">
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" placeholder="Enter your email" required>
-            </div>
-
-            <div class="form-group">
-                <label for="phone">Phone Number:</label>
-                <input type="text" id="phone" name="phone" placeholder="Enter your phone number" required>
-            </div>
-
-            <div class="form-group">
-                <label for="education">Education:</label>
-                <textarea id="education" name="education" rows="3" placeholder="Enter your educational background" required></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="projects">Projects:</label>
-                <textarea id="projects" name="projects" rows="4" placeholder="Enter your project details"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="resume">Upload Resume:</label>
-                <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx">
-            </div>
-
-            <div class="form-buttons">
-                <button type="submit" class="btn btn-primary">Save Profile</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
-            </div>
-        </form>
+            
+    <!-- Edit Profile Modal -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeEditDialog()">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="editProfileForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" value="John Doe">
+                <label for="designation">Designation:</label>
+                <input type="text" id="designation" value="Developer">
+                <label for="profile-photo">Profile Photo:</label>
+                <button type="button" onclick="document.getElementById('profilePicInput').click()">Upload Photo</button>
+                <input type="file" id="cv-upload" accept=".pdf" style="display: none;" onchange="handleFileUpload()">
+            <button type="button" onclick="document.getElementById('cv-upload').click()">Upload CV</button>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
     </div>
-</section>
+    
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

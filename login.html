@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Shalla</title>
-    <link href="style.css" rel="stylesheet">
+    <link href="style_login.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 </head>
 
@@ -120,7 +120,7 @@
                 localStorage.setItem('loggedInUser', JSON.stringify(user));
                 document.getElementById('signin-message').textContent = "Sign In Successful!";
                 setTimeout(() => {
-                    window.location.href = 'dashboard.html'; // Redirect to dashboard
+                    window.location.href = '/Users/kabirsharma/Desktop/sih-2/jobportal/job/index.html'; // Redirect to dashboard
                 }, 2000);
             } else {
                 document.getElementById('signin-message').textContent = "Incorrect email or password!";
