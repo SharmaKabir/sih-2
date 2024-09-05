@@ -250,10 +250,10 @@ https://templatemo.com/tm-516-known
   -----------------------------------------*/
 
   .section-btn {
-    background: transparent;
+    background: rgb(0, 0, 0);
     border-radius: 50px;
-    border: 1px solid #ffffff;
-    color: #ffffff;
+    border: 1px solid #00140e;
+    color: #08e376;
     font-size: inherit;
     font-weight: normal;
     padding: 15px 30px;
